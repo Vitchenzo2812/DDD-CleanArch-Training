@@ -1,5 +1,5 @@
 export default class Cpf {
-  private value: string
+  value: string
   private MIN_DIGITS_CPF = 11;
 
   constructor(readonly cpf: string) {
@@ -38,9 +38,5 @@ export default class Cpf {
     }
     const rest = total % this.MIN_DIGITS_CPF;
     return rest < 2 ? 0 : this.MIN_DIGITS_CPF - rest;
-  }
-
-  getCpf() {
-    return this.value;
   }
 }

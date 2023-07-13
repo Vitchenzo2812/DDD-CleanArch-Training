@@ -1,26 +1,30 @@
-import ApplicationError from "../../domain/error/ApplicationError";
 import { IRideRepository } from "../../domain/repositories/Ride";
+import { IUserRepository } from "../../domain/repositories/User";
 import { AcceptRideServiceDTO, IAcceptRideService } from "../../domain/service/AcceptRide";
 import RepositoryFactory from "../contracts/RepositoryFactory";
 
 export default class AcceptRideService implements IAcceptRideService {
   private rideRepository: IRideRepository;
+  private userRepository: IUserRepository;
 
   constructor(readonly repositoryFactory: RepositoryFactory) {
     this.rideRepository = this.repositoryFactory.createRideRepository();
+    this.userRepository = this.repositoryFactory.createUserRepository();
   }
   
-  async execute(input: AcceptRideServiceDTO.Input): Promise<void> {
+  async execute(input: AcceptRideServiceDTO.Input): Promise<AcceptRideServiceDTO.Output> {
     const ride = await this.rideRepository.findById(input.ride_id);
-    if(!ride) throw new ApplicationError("This ride not exists!", 400);
+    const driver = await this.userRepository.findById(input.driver_id);
 
     const payload = {
       id: ride.id,
-      driver_id: input.driver_id,
+      driver_id: driver.id,
       status_ride: "accepted",
-      request_date: new Date(),
+      accept_date: new Date(),
     }
 
     await this.rideRepository.update(payload)
+
+    return { message: "Ride Accepted" }
   }  
 }

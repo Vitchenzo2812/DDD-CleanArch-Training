@@ -1,17 +1,22 @@
 import axios from "axios"
+import MockAdapter from "axios-mock-adapter"
 import { AuthServiceDTO } from "../../src/domain/service/Auth"
 
 axios.defaults.validateStatus = function () {
   return true
 }
 
+const mock = new MockAdapter(axios);
+
 test("should register a passenger", async () => {
-  const input: AuthServiceDTO.AuthInputSignUp = {
+  const input: AuthServiceDTO.InputSignUp = {
     type: 'passenger',
     name: 'Fabiana Ferreira Penas',
     email: 'wfgpenas@gmail.com',
     document: '15618412772',
   }
+
+  mock.onPost('http://localhost:3000/register').reply(200, { id: '123' })
 
   const response = await axios.post('http://localhost:3000/register', input);
   const output = response.data;
@@ -20,24 +25,29 @@ test("should register a passenger", async () => {
 })
 
 test("should register a passenger and return id", async () => {
-  const input: AuthServiceDTO.AuthInputSignUp = {
+  const input: AuthServiceDTO.InputSignUp = {
     type: 'passenger',
     name: 'Fabiana Ferreira Penas',
     email: 'wfgpenas@gmail.com',
     document: '15618412772',
   }
 
+  mock.onPost('http://localhost:3000/register').reply(200, { id: '123'})
+
   const response1 = await axios.post('http://localhost:3000/register', input);
   const output1 = response1.data;
+  
+  mock.onGet(`http://localhost:3000/passenger/${output1.id}`).reply(200, { id: '123' })
 
   const response2 = await axios.get(`http://localhost:3000/passenger/${output1.id}`);
   const output2 = response2.data;
 
   expect(output1.id).toBe(output2.id);
+  mock.restore()
 })
 
 test("should register a driver and return id", async () => {
-  const input: AuthServiceDTO.AuthInputSignUp = {
+  const input: AuthServiceDTO.InputSignUp = {
     type: 'driver',
     name: 'Pedro',
     email: 'pedrogames@gmail.com',
@@ -54,7 +64,7 @@ test("should register a driver and return id", async () => {
 })
 
 test("should throw Error if driver not have car plate", async () => {
-  const input: AuthServiceDTO.AuthInputSignUp = {
+  const input: AuthServiceDTO.InputSignUp = {
     type: 'driver',
     name: 'Lebrom',
     email: 'LebromJames@gmail.com',
@@ -120,7 +130,7 @@ test("should request ride and return id ride", async () => {
   expect(output1.ride_id).toBe(output2.ride_id);
 })
 
-test.only("should accept ride", async () => {
+test("should accept ride", async () => {
   const inputPassenger = {
     type: 'passenger',
     name: 'Guilherme',
@@ -139,5 +149,5 @@ test.only("should accept ride", async () => {
   const passenger = await axios.post('http://localhost:3000/register', inputPassenger)
   const driver = await axios.post('http://localhost:3000/register', inputDriver)
 
-  
+
 })

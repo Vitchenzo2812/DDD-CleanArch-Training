@@ -48,7 +48,7 @@ Ao solicitar a corrida o status dela deve ser waiting_driver e o driver_id null.
 
 O from e to servem apenas para definir os pontos de origem e destino e orientar o motorista em relação ao trajeto desejado, conforme a corrida estiver em andamento os segmentos serão adicionados e o preço final pode mudar caso o motorista pegue um caminho diferente, faça mudanças no trajeto ou mude de horário, por exemplo uma corrida iniciada às 22:30 que termina às 23:10 acaba tendo cobranças diferentes por trecho.
 
-* Aceitar corrida
+* Aceitar corrida OK
 url: /accept_ride
 method: POST
 input: ride_id, driver_id

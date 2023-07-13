@@ -1,4 +1,3 @@
-import IUuidGenerator from "../../application/contracts/IUuidGenerator";
 import GetUser from "../../application/service/GetUser";
 import Auth from "../../application/service/Auth";
 import SimulationPriceRideService from "../../application/service/SimulationPriceRide";
@@ -9,10 +8,10 @@ import AcceptRideService from "../../application/service/AcceptRide";
 
 export default class UsecaseFactory {
 
-  constructor(private readonly repositoryFactory: RepositoryFactory, private readonly idGenerator: IUuidGenerator) {}
+  constructor(private readonly repositoryFactory: RepositoryFactory) {}
 
   createAuth() {
-    return new Auth(this.repositoryFactory, this.idGenerator)
+    return new Auth(this.repositoryFactory)
   }
 
   createSimulatePriceRide() {
@@ -20,7 +19,7 @@ export default class UsecaseFactory {
   }
 
   createRequestRide() {
-    return new RequestRideService(this.repositoryFactory, this.idGenerator);
+    return new RequestRideService(this.repositoryFactory);
   }
 
   createAcceptRide() {

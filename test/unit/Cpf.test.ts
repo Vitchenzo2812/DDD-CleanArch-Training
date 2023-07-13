@@ -6,13 +6,13 @@ test.each([
   "24012928880",
 ])("should validate a cpf", (cpf) => {
   const cpfClient = new Cpf(cpf)
-  expect(cpfClient).toBeDefined();
-  expect(cpfClient).toBeTruthy();
+  expect(cpfClient).toBeInstanceOf(Cpf);
+  expect(cpfClient.isValid()).toBeTruthy();
 })
 
 test("should return a cpf cleaned", () => {
   const cpfClient = new Cpf("392.350.525-64")
-  expect(cpfClient.getCpf()).toBe("39235052564");
+  expect(cpfClient.value).toBe("39235052564");
 })
 
 test.each([

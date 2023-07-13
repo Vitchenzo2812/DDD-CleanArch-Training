@@ -9,7 +9,7 @@ export default class UserRepository implements IUserRepository {
   
   async findById(idUser: string): Promise<User> {
     const [userData] = await this.connection.query("select * from cccat12.user where user_id = $1", [idUser])
-    if (!userData) throw new ApplicationError("User not exists!", 400);
+    if (!userData) throw new ApplicationError("User not exists!", 400)
     return new User(userData.user_id, userData.type, userData.name, userData.email, userData.document, userData.car_plate)  
   }
   
@@ -23,6 +23,6 @@ export default class UserRepository implements IUserRepository {
   }
   
   async save(user: User): Promise<void> {
-    await this.connection.query("insert into cccat12.user (user_id, type, name, email, document, car_plate) values ($1, $2, $3, $4, $5, $6)", [user.id, user.type, user.name, user.email, user.document, user.car_plate]);
+    await this.connection.query("insert into cccat12.user (user_id, type, name, email, document, car_plate) values ($1, $2, $3, $4, $5, $6)", [user.id, user.type, user.name, user.email.value, user.document.value, user.car_plate]);
   }  
 }

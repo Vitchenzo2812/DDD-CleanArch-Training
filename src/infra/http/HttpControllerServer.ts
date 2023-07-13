@@ -8,7 +8,7 @@ import UsecaseFactory from "../factory/UsecaseFactory";
 export default class HttpControllerServer {
   
   constructor(readonly httpServer: HttpServer, readonly usecaseFactory: UsecaseFactory) {
-    httpServer.on("post", "/register", async (params: any, body: AuthServiceDTO.AuthInputSignUp, headers: any) => {
+    httpServer.on("post", "/register", async (params: any, body: AuthServiceDTO.InputSignUp, headers: any) => {
         const register = this.usecaseFactory.createAuth();
         const output = await register.SignUp(body);
         return output;
