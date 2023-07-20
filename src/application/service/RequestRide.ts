@@ -22,9 +22,9 @@ export default class RequestRideService implements IRequestRideService {
 
       const from = new Coord(input.coords.from.lat, input.coords.from.long);
       const to = new Coord(input.coords.to.lat, input.coords.to.long);
+
       const ride = Ride.create(passenger.id, from, to);
       await this.rideRepository.save(ride);
-  
       return { ride_id: ride.id }
   }
 }

@@ -1,23 +1,23 @@
 import RequestRideService from "../../src/application/service/RequestRide"
 import ApplicationError from "../../src/domain/error/ApplicationError"
 import { IRequestRideService, RequestRideServiceDTO } from "../../src/domain/service/RequestRide"
-import sinon from 'sinon'
-import InMemoryRepositoryFactory from "../../src/infra/factory/InMemoryRepositoryFactory"
-import User from "../../src/domain/entities/User"
-import UserRepositoryInMemory from "../../src/infra/repositories/UserRepositoryInMemory"
+import DatabaseConnection from "../../src/application/contracts/DatabaseConnection"
+import PgPromiseAdapter from "../../src/infra/database/PgPromiseAdapter"
+import DatabaseRepositoryFactory from "../../src/infra/factory/DatabaseRepositoryFactory"
 
 let sut: IRequestRideService
+let connection: DatabaseConnection
 
-beforeEach(async () => {
-  const repositoryFactory = new InMemoryRepositoryFactory();
+beforeAll(async () => {
+  connection = new PgPromiseAdapter();
+  await connection.connect();
+  const repositoryFactory = new DatabaseRepositoryFactory(connection);
   sut = new RequestRideService(repositoryFactory);
 })
 
 test("should request a ride", async () => {
-  const UserStub = sinon.stub(UserRepositoryInMemory.prototype, "findById").resolves(new User("d753e682-10be-4b1b-ac36-393a24bd4127", "passenger", "Teste", "teste@gmail.com", "70962823430", ""));
-
   const input: RequestRideServiceDTO.Input = {
-    passenger_id: "d753e682-10be-4b1b-ac36-393a24bd4127",
+    passenger_id: "2a393d74-27c6-4742-a087-fb3029313da7",
     coords: {
       from: { lat: -36.7789, long: -20.3905 },
       to: { lat: -46.2271, long: -116.6852 }
@@ -26,7 +26,6 @@ test("should request a ride", async () => {
 
   const output = await sut.execute(input);
   expect(output.ride_id).toBeDefined();
-  UserStub.restore();
 })
 
 test("should throw Error if passenger_id is invalid", async () => {
@@ -49,4 +48,8 @@ test("should throw Error if passenger not exists", async () => {
     }
   }
   await expect(() => sut.execute(input)).rejects.toThrow(new ApplicationError("User not exists!", 400))
+})
+
+afterAll(async () => {
+  await connection.close();
 })

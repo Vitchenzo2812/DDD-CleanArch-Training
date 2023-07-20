@@ -13,6 +13,8 @@ export default class AuthService implements IAuthService {
   }
 
   async SignUp(input: AuthServiceDTO.InputSignUp): Promise<AuthServiceDTO.OutputSignUp> {
+      const userExists = await this.userRepository.findByEmail(input.email);
+      if(userExists) return { id: userExists.id }
       const user = User.create(input.type, input.name, input.email, input.document, input.car_plate);
       await this.userRepository.save(user);
       return { id: user.id };

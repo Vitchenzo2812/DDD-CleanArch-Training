@@ -2,7 +2,7 @@ export default class Cpf {
   value: string
   private MIN_DIGITS_CPF = 11;
 
-  constructor(readonly cpf: string) {
+  constructor(private readonly cpf: string) {
     this.cpf = this.CleanCpf();
     if (this.isValidLength()) throw new Error("Invalid cpf length");
     if (this.ValidateAllDigitsAreTheSame()) throw new Error("Invalid cpf!");
@@ -23,7 +23,7 @@ export default class Cpf {
     return [...this.cpf].every(digit => digit === firstDigit)
   }
 
-  isValid() {
+  private isValid() {
     const firstDigit = this.CalculateDigits(10);
     const secondDigit = this.CalculateDigits(11);
     let checkingLastDigits = this.cpf.slice(9);  

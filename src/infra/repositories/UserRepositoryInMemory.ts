@@ -9,17 +9,21 @@ export default class UserRepositoryInMemory implements IUserRepository {
     this.users = [];
   }
   
+  findByEmail(email: string): Promise<User | undefined> {
+    throw new Error("Method not implemented.");
+  }
+  
   async findById(idUser: string): Promise<User> {
     const userData = this.users.find(user => user.id === idUser);
     if (!userData) throw new ApplicationError("User not exists!", 400)
-    return new User(userData.id, userData.type, userData.name, userData.email.value, userData.document.value, userData.car_plate);
+    return User.restore(userData.id, userData.type, userData.name, userData.email.value, userData.document.value, userData.car_plate);
   }
 
   async getUsers(): Promise<User[]> {
     const usersData = [...this.users];
     const users: User[] = [];
     for (const userData of usersData) {
-      users.push(new User(userData.id, userData.type, userData.name, userData.email.value, userData.document.value, userData.car_plate))
+      users.push(User.restore(userData.id, userData.type, userData.name, userData.email.value, userData.document.value, userData.car_plate))
     }
     return users;
   }

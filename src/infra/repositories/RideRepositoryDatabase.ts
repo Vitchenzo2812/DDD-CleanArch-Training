@@ -11,7 +11,7 @@ export default class RideRepository implements IRideRepository {
   async findById(rideId: string): Promise<Ride> {
     const [rideData] = await this.connection.query("select * from cccat12.ride where ride_id = $1", [rideId])
     if (!rideData) throw new ApplicationError("This ride not exists!", 400);
-    return new Ride(rideData.ride_id, rideData.passenger_id, rideData.driver_id, rideData.status_ride, rideData.request_date, rideData.accept_date, rideData.from_distance as Coord, rideData.to_distance as Coord);
+    return Ride.restore(rideData.ride_id, rideData.passenger_id, rideData.driver_id, rideData.status_ride, new Date(rideData.request_date), rideData.accept_date, rideData.from_distance as Coord, rideData.to_distance as Coord);
   }
 
   async update(ride: Partial<Ride>): Promise<void> {

@@ -1,12 +1,17 @@
 import Auth from "../../src/application/service/Auth";
 import { AuthServiceDTO } from "../../src/domain/service/Auth";
 import ApplicationError from "../../src/domain/error/ApplicationError";
-import InMemoryRepositoryFactory from "../../src/infra/factory/InMemoryRepositoryFactory";
+import DatabaseConnection from "../../src/application/contracts/DatabaseConnection";
+import DatabaseRepositoryFactory from "../../src/infra/factory/DatabaseRepositoryFactory";
+import PgPromiseAdapter from "../../src/infra/database/PgPromiseAdapter";
 
 let register: Auth;
+let connection: DatabaseConnection
 
 beforeAll(async () => {
-  const repositoryFactory = new InMemoryRepositoryFactory();
+  connection = new PgPromiseAdapter();
+  await connection.connect();
+  const repositoryFactory = new DatabaseRepositoryFactory(connection)
   register = new Auth(repositoryFactory)
 })
 
@@ -25,7 +30,7 @@ test("should register a passenger", async () => {
 test("should register a driver", async () => {
   const input: AuthServiceDTO.InputSignUp = {
     type: "driver",
-    name: "João",
+    name: "Lucas",
     email: "teste@gmail.com",
     document: "392.350.525-64",
     car_plate: "AAA9999"
@@ -51,9 +56,13 @@ test("should throw Error if passenger's document is invalid", async () => {
   const input: AuthServiceDTO.InputSignUp = {
     type: "passenger",
     name: "Guilherme",
-    email: "gvitchenzo@gmail.com",
+    email: "gvit@gmail.com",
     document: "792.610.555-64"
   }
 
   await expect(() => register.SignUp(input)).rejects.toThrow(new ApplicationError("This document is invalid!", 400));
+})
+
+afterAll(async () => {
+  await connection.close();
 })

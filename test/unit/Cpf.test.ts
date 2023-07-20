@@ -7,7 +7,7 @@ test.each([
 ])("should validate a cpf", (cpf) => {
   const cpfClient = new Cpf(cpf)
   expect(cpfClient).toBeInstanceOf(Cpf);
-  expect(cpfClient.isValid()).toBeTruthy();
+  expect(cpfClient.value).toBeTruthy();
 })
 
 test("should return a cpf cleaned", () => {

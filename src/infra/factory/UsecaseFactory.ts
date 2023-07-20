@@ -1,10 +1,9 @@
 import GetUser from "../../application/service/GetUser";
 import Auth from "../../application/service/Auth";
-import SimulationPriceRideService from "../../application/service/SimulationPriceRide";
 import RepositoryFactory from "../../application/contracts/RepositoryFactory";
 import RequestRideService from "../../application/service/RequestRide";
-import GetRide from "../../application/service/GetRide";
 import AcceptRideService from "../../application/service/AcceptRide";
+import ConsultRideService from "../../application/service/ConsultRide";
 
 export default class UsecaseFactory {
 
@@ -12,10 +11,6 @@ export default class UsecaseFactory {
 
   createAuth() {
     return new Auth(this.repositoryFactory)
-  }
-
-  createSimulatePriceRide() {
-    return new SimulationPriceRideService();
   }
 
   createRequestRide() {
@@ -30,7 +25,7 @@ export default class UsecaseFactory {
     return new GetUser(this.repositoryFactory)
   }
   
-  getRide() {
-    return new GetRide(this.repositoryFactory)
+  getConsultRide() {
+    return new ConsultRideService(this.repositoryFactory)
   }
 }

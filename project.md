@@ -56,8 +56,26 @@ output: void
 
 Ao aceitar a corrida, o status dela deve ser accepted e o driver_id definido. Além disso, a accept_date deve ser a data atual.
 
-* Consultar corrida
+* Iniciar corrida
+url: /start_ride
+method: POST
+input: ride_id, position (lat, long), date
+output: void
+
+* Atualizar trajeto
+url: /add_segment_to_ride
+method: POST
+input: ride_id, position (lat, long), date
+output: void
+
+* Finalizar corrida
+url: /end_ride
+method: POST
+input: ride_id, position (lat, long), date
+output: void
+
+* Consultar corrida (atualizar)
 url: /rides/:id
 method: GET
 input: ride_id
-output: passenger's information, driver's information, status, waiting_duration
+output: passenger's information, driver's information, status, waiting_duration, distance, price ride_duration

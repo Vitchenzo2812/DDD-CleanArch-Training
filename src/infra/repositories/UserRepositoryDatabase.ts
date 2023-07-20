@@ -10,14 +10,20 @@ export default class UserRepository implements IUserRepository {
   async findById(idUser: string): Promise<User> {
     const [userData] = await this.connection.query("select * from cccat12.user where user_id = $1", [idUser])
     if (!userData) throw new ApplicationError("User not exists!", 400)
-    return new User(userData.user_id, userData.type, userData.name, userData.email, userData.document, userData.car_plate)  
+    return User.restore(userData.user_id, userData.type, userData.name, userData.email, userData.document, userData.car_plate)  
+  }
+
+  async findByEmail(email: string): Promise<User | undefined> {
+    const [userData] = await this.connection.query("select * from cccat12.user where email = $1", [email])
+    if(!userData) return;
+    return User.restore(userData.user_id, userData.type, userData.name, userData.email, userData.document, userData.car_plate);
   }
   
   async getUsers(): Promise<User[]> {
     const usersData = await this.connection.query("select * from cccat12.user", [])
     const users: User[] = []
     for (const userData of usersData) {
-      users.push(new User(userData.user_id, userData.type, userData.name, userData.email, userData.document, userData.car_plate))
+      users.push(User.restore(userData.user_id, userData.type, userData.name, userData.email, userData.document, userData.car_plate))
     }
     return users;
   }

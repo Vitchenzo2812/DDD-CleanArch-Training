@@ -4,7 +4,7 @@ import DistanceCalculator from "./DistanceCalculator";
 import Segment from "./Segment";
 
 export default class CalculateRide {
-  private distance: number;
+  distance: number;
   private segments: Segment[];
 	private MIN_PRICE = 10;
 
@@ -13,9 +13,7 @@ export default class CalculateRide {
 		this.segments = [];
   }
 
-  addSegment (coords: { from: { lat: number, long: number }, to: { lat: number, long: number }}, date: Date) {
-		const from = new Coord(coords.from.lat, coords.from.long);
-		const to = new Coord(coords.to.lat, coords.to.long);
+  addSegment (from: Coord, to: Coord, date: Date) {
 		this.distance = DistanceCalculator.calculate(from, to);
     this.segments.push(new Segment(this.distance, date));
 	}

@@ -12,7 +12,7 @@ export default class RideRepositoryInMemory implements IRideRepository {
   async findById(rideId: string): Promise<Ride> {
     const rideData = this.rides.find(ride => ride.id === rideId);
     if (!rideData) throw new ApplicationError("This ride not exists!", 400);
-    return new Ride(rideData.id, rideData.passenger_id, rideData.driver_id, rideData.status_ride, rideData.request_date, rideData.accept_date, rideData.from, rideData.to)
+    return Ride.restore(rideData.id, rideData.passenger_id, rideData.driver_id, rideData.status_ride, rideData.request_date, rideData.accept_date, rideData.from, rideData.to)
   }
 
   async update(ride: Ride): Promise<void> {
