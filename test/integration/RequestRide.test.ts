@@ -15,9 +15,12 @@ beforeAll(async () => {
   sut = new RequestRideService(repositoryFactory);
 })
 
-test("should request a ride", async () => {
+test.each([
+  "13f00d27-e75b-4386-8060-249ac41e48d9",
+  "ea704b84-b24e-4811-ad25-19668aa7468e"
+])("should request a ride", async (idPassenger) => {
   const input: RequestRideServiceDTO.Input = {
-    passenger_id: "2a393d74-27c6-4742-a087-fb3029313da7",
+    passenger_id: idPassenger,
     coords: {
       from: { lat: -36.7789, long: -20.3905 },
       to: { lat: -46.2271, long: -116.6852 }

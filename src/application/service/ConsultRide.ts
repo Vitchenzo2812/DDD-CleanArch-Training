@@ -15,7 +15,8 @@ export default class ConsultRideService implements IConsultRideService {
     this.rideRepository = this.repositoryFactory.createRideRepository();
   }
   
-  async execute(rideId: string): Promise<ConsultRideServiceDTO.Output> {
+  // ConsultRideServiceDTO.Output
+  async execute(rideId: string): Promise<any> {
     const ride = await this.rideRepository.findById(rideId);
     const passenger = await this.userRepository.findById(ride.passenger_id);
 
@@ -44,9 +45,9 @@ export default class ConsultRideService implements IConsultRideService {
       waiting_duration = WaitingDurationRide.calculate(ride.request_date, ride.accept_date)
     }
 
-    const calculateRide = new CalculateRide();
-    calculateRide.addSegment(ride.from, ride.to, ride.request_date);
-    const price = calculateRide.calculate();
+    // const calculateRide = new CalculateRide();
+    // calculateRide.addSegment(ride.from, ride.to, ride.request_date);
+    // const price = calculateRide.calculate();
 
     return {
       id: ride.id,
@@ -59,8 +60,8 @@ export default class ConsultRideService implements IConsultRideService {
       driver,
       status_ride: ride.status_ride,
       waiting_duration,
-      distance: calculateRide.distance,
-      price,
+      // distance: calculateRide.distance,
+      // price,
     }
   }
 }

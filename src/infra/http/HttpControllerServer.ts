@@ -2,6 +2,7 @@ import HttpServer from "../../application/contracts/HttpServer";
 import { AcceptRideServiceDTO } from "../../domain/service/AcceptRide";
 import { AuthServiceDTO } from "../../domain/service/Auth";
 import { RequestRideServiceDTO } from "../../domain/service/RequestRide";
+import { StartRideDTO } from "../../domain/service/StartRide";
 import UsecaseFactory from "../factory/UsecaseFactory";
 
 export default class HttpControllerServer {
@@ -22,6 +23,12 @@ export default class HttpControllerServer {
     httpServer.on("post", "/accept_ride", async (params: any, body: AcceptRideServiceDTO.Input, headers: any) => {
         const AcceptRide = this.usecaseFactory.createAcceptRide();
         const output = AcceptRide.execute(body);
+        return output
+    })
+    
+    httpServer.on("post", "/start_ride", async (params: any, body: StartRideDTO.Input, headers: any) => {
+        const StartRide = this.usecaseFactory.createStartRide();
+        const output = StartRide.execute(body);
         return output
     })
     

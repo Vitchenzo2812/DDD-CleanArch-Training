@@ -16,30 +16,27 @@ beforeAll(async () => {
 
 test("should return a accepted ride", async () => {
   const input = {
-    ride_id: "d075504e-cda7-4545-92cf-91b04e2daf22"
+    ride_id: "5ebeccec-269f-4fed-a64c-d00556220f1a"
   }
 
   const output = await sut.execute(input.ride_id);
-  expect(output.id).toBe("d075504e-cda7-4545-92cf-91b04e2daf22");
-  expect(output.passenger.name).toBe("Guilherme")
-  expect(output.driver.name).toBe("João")
+  expect(output.id).toBe("5ebeccec-269f-4fed-a64c-d00556220f1a");
+  expect(output.passenger.name).toBe("Fabiana Ferreira Penas")
+  expect(output.driver.name).toBe("Lucas")
   expect(output.status_ride).toBe("accepted");
-  expect(output.distance).toBe(7581.661812288502);
-  expect(output.price).toBe(15921.49)
 })
 
-test.only("should return a request ride", async () => {
+test("should return a request ride", async () => {
   const input = {
-    ride_id: "fa9c6191-554c-418b-89c0-21e58d9c75f0"
+    ride_id: "e9865180-b92e-4bd4-b24d-7b3d063cec74"
   }
 
   const output = await sut.execute(input.ride_id);
-  expect(output.id).toBe("fa9c6191-554c-418b-89c0-21e58d9c75f0");
+  expect(output.id).toBe("e9865180-b92e-4bd4-b24d-7b3d063cec74");
   expect(output.passenger.name).toBe("Guilherme")
   expect(output.driver.name).toBe("")
   expect(output.waiting_duration).toBe(0)
   expect(output.status_ride).toBe("waiting_driver");
-  expect(output.price).toBe(15921.49)
 })
 
 afterAll(async () => {

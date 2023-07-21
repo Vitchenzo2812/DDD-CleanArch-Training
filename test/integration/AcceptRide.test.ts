@@ -17,8 +17,8 @@ beforeAll(async () => {
 
 test("should accept a ride", async () => {
   const input = {
-    ride_id: "d075504e-cda7-4545-92cf-91b04e2daf22",
-    driver_id: "39acaa46-82bd-4126-b07a-ef5baa472a1f"
+    ride_id: "5ebeccec-269f-4fed-a64c-d00556220f1a",
+    driver_id: "ef093e81-a553-482c-af51-95a3d961e2a6"
   }
   const output = await sut.execute(input);
   expect(output.message).toBe("Ride Accepted")
@@ -34,8 +34,8 @@ test("should throw Error if ride not exists", async () => {
 
 test("should throw Error if driver not exists", async () => {
   const input = {
-    ride_id: "d075504e-cda7-4545-92cf-91b04e2daf22",
-    driver_id: "9f31f135-ad5c-4f9d-81a4-eab125b821a5",
+    ride_id: "5ebeccec-269f-4fed-a64c-d00556220f1a",
+    driver_id: "20cd6842-d6ea-4a9f-bee7-de142cdf05a5",
   }
   await expect(() => sut.execute(input)).rejects.toThrow(new ApplicationError("User not exists!", 400))
 })

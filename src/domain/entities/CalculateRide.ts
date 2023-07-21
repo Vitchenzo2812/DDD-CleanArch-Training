@@ -1,26 +1,29 @@
 import FareCalculatorFactory from "../factory/FareCalculatorFactory";
-import Coord from "./Coord";
 import DistanceCalculator from "./DistanceCalculator";
+import Position from "./Position";
 import Segment from "./Segment";
 
 export default class CalculateRide {
   distance: number;
-  private segments: Segment[];
+	private positions: Position[];
 	private MIN_PRICE = 10;
 
   constructor() {
     this.distance = 0;
-		this.segments = [];
+		this.positions = []
   }
 
-  addSegment (from: Coord, to: Coord, date: Date) {
-		this.distance = DistanceCalculator.calculate(from, to);
-    this.segments.push(new Segment(this.distance, date));
+	addPosition (coords: { lat: number, long: number }, date: Date) {
+		this.positions.push(Position.create(coords, date))
 	}
 
 	calculate () {
 		let price = 0;
-		for (const segment of this.segments) {
+		for (const [index, position] of this.positions.entries()) {
+			const nextPosition = this.positions[index + 1]
+			if(!nextPosition) break;
+			const distance = DistanceCalculator.calculate(position.coords, nextPosition.coords)
+			const segment = Segment.create(distance, nextPosition.date)
 			const fareCalculator = FareCalculatorFactory.create(segment);
 			price += fareCalculator.calculate(segment)
 		}

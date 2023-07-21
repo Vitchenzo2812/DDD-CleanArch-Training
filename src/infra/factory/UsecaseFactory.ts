@@ -4,6 +4,7 @@ import RepositoryFactory from "../../application/contracts/RepositoryFactory";
 import RequestRideService from "../../application/service/RequestRide";
 import AcceptRideService from "../../application/service/AcceptRide";
 import ConsultRideService from "../../application/service/ConsultRide";
+import StartRide from "../../application/service/StartRide";
 
 export default class UsecaseFactory {
 
@@ -19,6 +20,10 @@ export default class UsecaseFactory {
 
   createAcceptRide() {
     return new AcceptRideService(this.repositoryFactory)
+  }
+
+  createStartRide() {
+    return new StartRide(this.repositoryFactory);
   }
 
   getUser() {

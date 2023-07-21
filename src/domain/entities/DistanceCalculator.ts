@@ -3,7 +3,7 @@ import Coord from "./Coord";
 export default class DistanceCalculator {
 
 	static calculate (from: Coord, to: Coord) {
-		if (from.lat == to.lat && from.long == to.long) return 0;
+		if (from.lat === to.lat && from.long === to.long) return 0;
 		const radlat1 = (Math.PI * from.lat) / 180;
 		const radlat2 = (Math.PI * to.lat) / 180;
 		const theta = from.long - to.long;

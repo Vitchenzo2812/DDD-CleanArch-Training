@@ -56,7 +56,7 @@ output: void
 
 Ao aceitar a corrida, o status dela deve ser accepted e o driver_id definido. Além disso, a accept_date deve ser a data atual.
 
-* Iniciar corrida
+* Iniciar corrida OK
 url: /start_ride
 method: POST
 input: ride_id, position (lat, long), date
