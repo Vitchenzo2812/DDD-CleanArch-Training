@@ -1,5 +1,5 @@
 import { PositionTypeInput } from "./PositionTypeInput";
 
-export interface IStartRideService {
+export interface IUpdateRide {
   execute(input: PositionTypeInput): Promise<void>
 }

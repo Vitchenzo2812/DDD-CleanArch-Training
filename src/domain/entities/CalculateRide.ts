@@ -13,8 +13,8 @@ export default class CalculateRide {
 		this.positions = []
   }
 
-	addPosition (coords: { lat: number, long: number }, date: Date) {
-		this.positions.push(Position.create(coords, date))
+	addPosition (ride_id: string, coords: { lat: number, long: number }, date: Date) {
+		this.positions.push(Position.create(ride_id, coords, date))
 	}
 
 	calculate () {

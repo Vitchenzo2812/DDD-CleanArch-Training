@@ -62,7 +62,7 @@ method: POST
 input: ride_id, position (lat, long), date
 output: void
 
-* Atualizar trajeto
+* Atualizar trajeto OK
 url: /add_segment_to_ride
 method: POST
 input: ride_id, position (lat, long), date

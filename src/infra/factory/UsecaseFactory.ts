@@ -5,13 +5,14 @@ import RequestRideService from "../../application/service/RequestRide";
 import AcceptRideService from "../../application/service/AcceptRide";
 import ConsultRideService from "../../application/service/ConsultRide";
 import StartRide from "../../application/service/StartRide";
+import UpdateRide from "../../application/service/UpdateRide";
 
 export default class UsecaseFactory {
 
   constructor(private readonly repositoryFactory: RepositoryFactory) {}
 
   createAuth() {
-    return new Auth(this.repositoryFactory)
+    return new Auth(this.repositoryFactory);
   }
 
   createRequestRide() {
@@ -19,18 +20,22 @@ export default class UsecaseFactory {
   }
 
   createAcceptRide() {
-    return new AcceptRideService(this.repositoryFactory)
+    return new AcceptRideService(this.repositoryFactory);
   }
 
   createStartRide() {
     return new StartRide(this.repositoryFactory);
   }
 
+  createUpdateRide() {
+    return new UpdateRide(this.repositoryFactory);
+  }
+
   getUser() {
-    return new GetUser(this.repositoryFactory)
+    return new GetUser(this.repositoryFactory);
   }
   
   getConsultRide() {
-    return new ConsultRideService(this.repositoryFactory)
+    return new ConsultRideService(this.repositoryFactory);
   }
 }
