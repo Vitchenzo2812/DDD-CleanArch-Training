@@ -38,6 +38,12 @@ export default class HttpControllerServer {
         return output
     })
     
+    httpServer.on("post", "/end_ride", async (params: any, body: PositionTypeInput, headers: any) => {
+        const EndRide = this.usecaseFactory.createEndRide();
+        const output = EndRide.execute(body);
+        return output
+    })
+    
     httpServer.on("get", "/passenger/:id", async (params: any, body: any, headers: any) => {
       const getUser = this.usecaseFactory.getUser();
       const output = await getUser.execute(params.id);

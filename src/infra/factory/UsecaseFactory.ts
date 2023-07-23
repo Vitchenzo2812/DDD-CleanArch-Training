@@ -6,6 +6,7 @@ import AcceptRideService from "../../application/service/AcceptRide";
 import ConsultRideService from "../../application/service/ConsultRide";
 import StartRide from "../../application/service/StartRide";
 import UpdateRide from "../../application/service/UpdateRide";
+import EndRide from "../../application/service/EndRide";
 
 export default class UsecaseFactory {
 
@@ -29,6 +30,10 @@ export default class UsecaseFactory {
 
   createUpdateRide() {
     return new UpdateRide(this.repositoryFactory);
+  }
+
+  createEndRide() {
+    return new EndRide(this.repositoryFactory);
   }
 
   getUser() {

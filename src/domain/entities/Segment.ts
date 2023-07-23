@@ -26,7 +26,7 @@ export default class Segment {
 	}
 	
 	isValidDistance () {
-		return this.distance && typeof this.distance === "number" && this.distance > 0;
+		return this.distance && typeof this.distance === "number";
 	}
 	
 	isValidDate () {

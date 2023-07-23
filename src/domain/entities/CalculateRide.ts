@@ -22,11 +22,14 @@ export default class CalculateRide {
 		for (const [index, position] of this.positions.entries()) {
 			const nextPosition = this.positions[index + 1]
 			if(!nextPosition) break;
-			const distance = DistanceCalculator.calculate(position.coords, nextPosition.coords)
-			const segment = Segment.create(distance, nextPosition.date)
+			this.distance = DistanceCalculator.calculate(position.coords, nextPosition.coords)
+			const segment = Segment.create(this.distance, nextPosition.date)
 			const fareCalculator = FareCalculatorFactory.create(segment);
 			price += fareCalculator.calculate(segment)
 		}
-		return Math.max(this.MIN_PRICE, +price.toFixed(2))
+		return {
+			distance: this.distance,
+			price: Math.max(this.MIN_PRICE, +price.toFixed(2))
+		}
 	}
 }

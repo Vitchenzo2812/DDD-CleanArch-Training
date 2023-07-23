@@ -20,10 +20,10 @@ beforeAll(async () => {
 test("should add new position", async () => {
   const spy = sinon.spy(PositionRepository.prototype, 'save');
   const input = {
-    ride_id: "5ebeccec-269f-4fed-a64c-d00556220f1a",
+    ride_id: "3b6187ce-7a7d-4227-ac39-ce8c7726c97d",
     position: {
-      lat: -25.4923,
-      long: -137.8960
+      lat: -51.533, 
+      long: 101.261
     },
     date: new Date()
   }

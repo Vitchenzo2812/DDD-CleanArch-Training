@@ -16,14 +16,17 @@ beforeAll(async () => {
 
 test("should return a accepted ride", async () => {
   const input = {
-    ride_id: "5ebeccec-269f-4fed-a64c-d00556220f1a"
+    ride_id: "3b6187ce-7a7d-4227-ac39-ce8c7726c97d"
   }
 
   const output = await sut.execute(input.ride_id);
-  expect(output.id).toBe("5ebeccec-269f-4fed-a64c-d00556220f1a");
-  expect(output.passenger.name).toBe("Fabiana Ferreira Penas")
+  expect(output.id).toBe("3b6187ce-7a7d-4227-ac39-ce8c7726c97d");
+  expect(output.passenger.name).toBe("Guilherme")
   expect(output.driver.name).toBe("Lucas")
   expect(output.status_ride).toBe("accepted");
+  expect(output.price).toBe(163328.71);
+  expect(output.distance).toBe(8554.702755318845);
+  expect(output.ride_duration).toBe(7);
 })
 
 test("should return a request ride", async () => {

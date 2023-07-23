@@ -68,13 +68,13 @@ method: POST
 input: ride_id, position (lat, long), date
 output: void
 
-* Finalizar corrida
+* Finalizar corrida OK
 url: /end_ride
 method: POST
 input: ride_id, position (lat, long), date
 output: void
 
-* Consultar corrida (atualizar)
+* Consultar corrida (atualizar) OK
 url: /rides/:id
 method: GET
 input: ride_id

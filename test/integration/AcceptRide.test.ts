@@ -17,7 +17,7 @@ beforeAll(async () => {
 
 test("should accept a ride", async () => {
   const input = {
-    ride_id: "5ebeccec-269f-4fed-a64c-d00556220f1a",
+    ride_id: "3b6187ce-7a7d-4227-ac39-ce8c7726c97d",
     driver_id: "ef093e81-a553-482c-af51-95a3d961e2a6"
   }
   const output = await sut.execute(input);

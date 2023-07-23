@@ -20,7 +20,7 @@ beforeAll(async () => {
 test.skip("should start a ride", async () => {
   const spy = sinon.spy(RideRepository.prototype, 'updateStartRide')
   const input = {
-    ride_id: "5ebeccec-269f-4fed-a64c-d00556220f1a",
+    ride_id: "3b6187ce-7a7d-4227-ac39-ce8c7726c97d",
     position: { lat: -36.7789, long: -20.3905 }, 
     date: new Date()
   }

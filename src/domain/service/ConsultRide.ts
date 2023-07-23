@@ -13,6 +13,7 @@ export namespace ConsultRideServiceDTO {
     waiting_duration: number;
     distance: number;
     price: number;
+    ride_duration: number;
   }
 }
 

@@ -1,6 +1,7 @@
 import CalculateRide from "../../domain/entities/CalculateRide";
 import User from "../../domain/entities/User";
-import WaitingDurationRide from "../../domain/entities/WaitingDurationRide";
+import DurationRide from "../../domain/entities/DurationRide";
+import { IPositionRepository } from "../../domain/repositories/Position";
 import { IRideRepository } from "../../domain/repositories/Ride";
 import { IUserRepository } from "../../domain/repositories/User";
 import { ConsultRideServiceDTO, Driver, IConsultRideService } from "../../domain/service/ConsultRide";
@@ -9,16 +10,18 @@ import RepositoryFactory from "../contracts/RepositoryFactory";
 export default class ConsultRideService implements IConsultRideService {
   private userRepository: IUserRepository;
   private rideRepository: IRideRepository;
+  private positionRepository: IPositionRepository;
 
   constructor(private readonly repositoryFactory: RepositoryFactory) {
     this.userRepository = this.repositoryFactory.createUserRepository();
     this.rideRepository = this.repositoryFactory.createRideRepository();
+    this.positionRepository = this.repositoryFactory.createPositionRepository();
   }
   
-  // ConsultRideServiceDTO.Output
-  async execute(rideId: string): Promise<any> {
+  async execute(rideId: string): Promise<ConsultRideServiceDTO.Output> {
     const ride = await this.rideRepository.findById(rideId);
     const passenger = await this.userRepository.findById(ride.passenger_id);
+    const positions = await this.positionRepository.findById(rideId);
 
     let driverDataBase: User;
     let driver: Driver = {
@@ -42,12 +45,17 @@ export default class ConsultRideService implements IConsultRideService {
 
     let waiting_duration: number = 0;
     if(ride.accept_date) {
-      waiting_duration = WaitingDurationRide.calculate(ride.request_date, ride.accept_date)
+      waiting_duration = DurationRide.calculate(ride.request_date, ride.accept_date)
     }
 
-    // const calculateRide = new CalculateRide();
-    // calculateRide.addSegment(ride.from, ride.to, ride.request_date);
-    // const price = calculateRide.calculate();
+    const calculateRide = new CalculateRide();
+    positions.map(position => calculateRide.addPosition(position.ride_id, position.coords, position.date));
+    const price = calculateRide.calculate().price;
+
+    let duration: number = 0;
+    if(ride.start_date && ride.end_date) {
+      duration = DurationRide.calculate(ride.start_date, ride.end_date);
+    }
 
     return {
       id: ride.id,
@@ -60,8 +68,9 @@ export default class ConsultRideService implements IConsultRideService {
       driver,
       status_ride: ride.status_ride,
       waiting_duration,
-      // distance: calculateRide.distance,
-      // price,
+      distance: calculateRide.distance,
+      price,
+      ride_duration: duration
     }
   }
 }

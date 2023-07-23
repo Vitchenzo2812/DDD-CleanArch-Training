@@ -1,4 +1,4 @@
-import WaitingDurationRide from "../../src/domain/entities/WaitingDurationRide";
+import DurationRide from "../../src/domain/entities/DurationRide";
 
 test("should calculate waiting duration ride", () => {
   const input = {
@@ -6,6 +6,6 @@ test("should calculate waiting duration ride", () => {
     accept_date: new Date('2023-07-20T11:00:00'),
   }
 
-  const output = WaitingDurationRide.calculate(input.request_date, input.accept_date);
+  const output = DurationRide.calculate(input.request_date, input.accept_date);
   expect(output).toBe(60);
 })
